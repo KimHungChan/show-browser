@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import NavBar from '@/components/NavBar/NavBar';
+import SearchBar from '@/components/SearchBar/SearchBar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,8 +19,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className + ' flex items-center flex-col'}>
-        {children}
+      <body
+        className={
+          inter.className +
+          ' flex items-center content-center flex-col bg-black'
+        }
+      >
+        <Script
+          src="https://kit.fontawesome.com/d139c0e4b5.js"
+          crossOrigin="anonymous"
+        ></Script>
+        <NavBar>
+          <SearchBar />
+        </NavBar>
+        <div className="max-w-7xl ">{children}</div>
       </body>
     </html>
   );
