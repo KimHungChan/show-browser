@@ -9,7 +9,7 @@ const ShowTile = ({ showResult }: { showResult: Show }) => {
   const router = useRouter();
   return (
     <div
-      className={`${'show - tile w-48 h-88 hover:scale-150 transition-transform duration-300 ease-in-out cursor-pointer rounded-md flex flex-col overflow-hidden shadow-xl hover:z-10'}`}
+      className={`${'w-48 h-88 hover:scale-150 transition-transform duration-300 ease-in-out cursor-pointer rounded-md flex flex-col overflow-hidden shadow-xl hover:z-10'}`}
       onMouseOver={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
       onClick={() => {
@@ -17,6 +17,7 @@ const ShowTile = ({ showResult }: { showResult: Show }) => {
         router.push(`/show/${showResult.id}`);
         localStorage.setItem('selectedShow', JSON.stringify(showResult));
       }}
+      data-testid="show-tile"
     >
       {showResult?.image ? (
         <img
