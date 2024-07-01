@@ -48,7 +48,10 @@ const EpisodeListPage = () => {
             </div>
             <p>
               {episode?.summary &&
-                episode?.summary?.replace(/<[^>]*>?/gm, '').substring(0, 100)}
+                episode?.summary
+                  ?.replace(/<[^>]*>?/gm, '')
+                  .substring(0, 100)
+                  .padEnd(103, '...')}
             </p>
           </div>
         </div>
