@@ -17,3 +17,39 @@ export const getShowById = async (id: number) => {
     console.error(error);
   }
 };
+
+export const getShowEpisodes = async (id: number) => {
+  try {
+    const response = await fetch(`${BASE_URL}shows/${id}/episodes`);
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getShowSeasons = async (id: number) => {
+  try {
+    const response = await fetch(`${BASE_URL}shows/${id}/seasons`);
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getShowCast = async (id: number) => {
+  try {
+    const response = await fetch(`${BASE_URL}shows/${id}/cast`);
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getShowImages = async (id: number) => {
+  try {
+    const response = await fetch(`${BASE_URL}shows/${id}/images`);
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
