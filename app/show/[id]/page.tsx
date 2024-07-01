@@ -123,10 +123,10 @@ const ShowPage = () => {
               <img
                 srcSet={`${episode?.image?.medium} 700w, ${episode?.image?.original} 1200w`}
                 alt={episode.name}
-                className="w-70 h-48 object-cover"
+                className="h-48 object-cover"
               />
             ) : (
-              <div className="h-48 bg-gray-200 text-black flex justify-center items-center">
+              <div className="h-48 w-96 bg-gray-200 text-black flex justify-center items-center">
                 {episode.name}
               </div>
             )}
