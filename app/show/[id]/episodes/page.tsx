@@ -1,12 +1,20 @@
 'use client';
-
+import { useEffect } from 'react';
 import useShowStore from '../../../../store/store';
-
+import { useParams } from 'next/navigation';
 const EpisodeListPage = () => {
   const selectedShowExtraData = useShowStore(
     (state) => state.selectedShowExtraData
   );
   const selectedShow = useShowStore((state) => state.selectedShow);
+  const { id } = useParams();
+  const getSelectedShowExtraData = useShowStore(
+    (state) => state.getSelectedShowExtraData
+  );
+
+  useEffect(() => {
+    getSelectedShowExtraData(Number(id));
+  }, [selectedShow, getSelectedShowExtraData]);
 
   return (
     <div className="grid grid-cols-1 gap-y-8 px-16 text-white">
@@ -17,9 +25,9 @@ const EpisodeListPage = () => {
           <div>
             {episode.image?.medium && (
               <img
-                src={episode?.image?.medium}
+                srcSet={`${episode?.image?.medium} 700w, ${episode?.image?.original} 1200w`}
                 alt={episode.name}
-                className="w-64 h-auto object-cover"
+                className="w-96 h-40 object-cover"
               />
             )}
           </div>
