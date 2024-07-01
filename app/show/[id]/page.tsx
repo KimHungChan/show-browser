@@ -48,11 +48,12 @@ const ShowPage = () => {
           {selectedShow?.status === 'Ended' && (
             <p>Ended: {selectedShow?.ended}</p>
           )}
-          <p>
-            <i className="fa-solid fa-clock"></i> {selectedShow?.runtime}{' '}
-            minutes
-          </p>
-          {/* if show ended show the end date */}
+          {selectedShow?.runtime && (
+            <p>
+              <i className="fa-solid fa-clock"></i> {selectedShow?.runtime}{' '}
+              minutes
+            </p>
+          )}
         </div>
         <div className="sm:text-right">
           {' '}
@@ -92,29 +93,34 @@ const ShowPage = () => {
           <i className="fa-solid fa-angle-up"></i>
         )}
       </button>
-      <h2>Episodes</h2>
+      <h2 className="mb-4 text-3xl">Episodes</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {selectedShowExtraData?.episodes.slice(0, 5).map((episode) => (
           <div
             key={episode.id}
             className="bg-black-gray text-white p-2 rounded-md"
           >
-            <img src={episode.image?.medium} alt={episode.name} />
-            <h3>{episode.name}</h3>
+            {episode.image?.medium && (
+              <img src={episode.image?.medium} alt={episode.name} />
+            )}
+
+            <h3 className="font-bold">{episode.name}</h3>
             <p>Season: {episode.season}</p>
             <p>Episode: {episode.number}</p>
             <p>Airdate: {episode.airdate}</p>
           </div>
         ))}
       </div>
-      <button
-        onClick={() => router.push(`/show/${selectedShow?.id}/episodes`)}
-        className="text-white bg-black p-2 rounded-md  flex w-full justify-center mt-4 bg-opacity-50 hover:bg-opacity-70 bg-black-gray"
-      >
-        See All Episodes
-      </button>
+      {selectedShowExtraData?.episodes.length > 5 && (
+        <button
+          onClick={() => router.push(`/show/${selectedShow?.id}/episodes`)}
+          className="text-white bg-black p-2 rounded-md  flex w-full justify-center mt-4 bg-opacity-50 hover:bg-opacity-70 bg-black-gray"
+        >
+          See All Episodes
+        </button>
+      )}
 
-      <h2>Seasons</h2>
+      <h2 className="mb-4 text-3xl">Seasons</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {selectedShowExtraData?.seasons
           .slice(0, showMoreSeasons ? selectedShowExtraData?.seasons.length : 3)
@@ -129,18 +135,20 @@ const ShowPage = () => {
             </div>
           ))}
       </div>
-      <button
-        onClick={() => setShowMoreSeasons(!showMoreSeasons)}
-        className="text-white bg-black p-2 rounded-md  flex w-full justify-center mt-4 bg-opacity-50 hover:bg-opacity-70 bg-black-gray"
-      >
-        {!showMoreSeasons ? (
-          <i className="fa-solid fa-chevron-down"></i>
-        ) : (
-          <i className="fa-solid fa-angle-up"></i>
-        )}
-      </button>
+      {selectedShowExtraData?.seasons.length > 3 && (
+        <button
+          onClick={() => setShowMoreSeasons(!showMoreSeasons)}
+          className="text-white bg-black p-2 rounded-md  flex w-full justify-center mt-4 bg-opacity-50 hover:bg-opacity-70 bg-black-gray"
+        >
+          {!showMoreSeasons ? (
+            <i className="fa-solid fa-chevron-down"></i>
+          ) : (
+            <i className="fa-solid fa-angle-up"></i>
+          )}
+        </button>
+      )}
 
-      <h2>Cast</h2>
+      <h2 className="mb-4 text-3xl">Cast</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {selectedShowExtraData?.cast
           .slice(0, showMoreCast ? selectedShowExtraData?.cast.length : 3)
@@ -155,16 +163,18 @@ const ShowPage = () => {
             </div>
           ))}
       </div>
-      <button
-        onClick={() => setShowMoreCast(!showMoreCast)}
-        className="text-white bg-black p-2 rounded-md  flex w-full justify-center mt-4 bg-opacity-50 hover:bg-opacity-70 bg-black-gray"
-      >
-        {!showMoreCast ? (
-          <i className="fa-solid fa-chevron-down"></i>
-        ) : (
-          <i className="fa-solid fa-angle-up"></i>
-        )}
-      </button>
+      {selectedShowExtraData?.cast.length > 3 && (
+        <button
+          onClick={() => setShowMoreCast(!showMoreCast)}
+          className="text-white bg-black p-2 rounded-md  flex w-full justify-center mt-4 bg-opacity-50 hover:bg-opacity-70 bg-black-gray"
+        >
+          {!showMoreCast ? (
+            <i className="fa-solid fa-chevron-down"></i>
+          ) : (
+            <i className="fa-solid fa-angle-up"></i>
+          )}
+        </button>
+      )}
     </div>
   );
 };

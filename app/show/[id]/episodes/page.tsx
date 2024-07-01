@@ -15,7 +15,9 @@ const EpisodeListPage = () => {
       {selectedShowExtraData.episodes?.map((episode) => (
         <div key={episode.id} className="flex gap-x-4">
           <div>
-            <img src={episode.image.medium} alt={episode.name} />
+            {episode.image?.medium && (
+              <img src={episode?.image?.medium} alt={episode.name} />
+            )}
           </div>
           <div>
             <div className="flex justify-between">
@@ -29,12 +31,12 @@ const EpisodeListPage = () => {
                   className="fa-solid fa-star"
                   style={{ color: '#FFD43B' }}
                 ></i>
-                {episode.rating?.average && <p> {episode.rating.average}</p>}
+                {episode.rating?.average && <p> {episode.rating?.average}</p>}
               </div>
             </div>
             <p>
-              {episode.summary.replace(/<[^>]*>?/gm, '').substring(0, 100)}
-              ...
+              {episode?.summary &&
+                episode?.summary?.replace(/<[^>]*>?/gm, '').substring(0, 100)}
             </p>
           </div>
         </div>
