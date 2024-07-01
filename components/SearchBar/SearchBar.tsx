@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import useShowStore from '@/store/store';
 import { usePathname, useRouter } from 'next/navigation';
+import { useDebouncedCallback } from 'use-debounce';
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,6 +17,10 @@ const SearchBar = () => {
     }
   };
 
+  const debounceSearch = useDebouncedCallback((searchTerm: string) => {
+    searchTvShows(searchTerm);
+  }, 500);
+
   return (
     <div className="flex border bg-black text-white">
       <input
@@ -25,7 +30,7 @@ const SearchBar = () => {
         className="w-48 outline-none bg-black text-white p-2"
         onChange={(value) => {
           setSearchTerm(value.target.value);
-          if (pathname === '/') OnSearch(value.target.value);
+          if (pathname === '/') debounceSearch(value.target.value);
         }}
         onKeyDown={(event) => {
           if (event.key === 'Enter') {

@@ -16,10 +16,14 @@ const EpisodeListPage = () => {
         <div key={episode.id} className="flex gap-x-4">
           <div>
             {episode.image?.medium && (
-              <img src={episode?.image?.medium} alt={episode.name} />
+              <img
+                src={episode?.image?.medium}
+                alt={episode.name}
+                className="w-64 h-auto object-cover"
+              />
             )}
           </div>
-          <div>
+          <div className="w-full">
             <div className="flex justify-between">
               <h2>{`S${episode.season
                 .toString()

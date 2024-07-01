@@ -33,6 +33,11 @@ export default function RootLayout({
           <SearchBar />
         </NavBar>
         <div className="max-w-7xl ">{children}</div>
+        <footer
+          className="
+        h-20
+        "
+        ></footer>
       </body>
     </html>
   );

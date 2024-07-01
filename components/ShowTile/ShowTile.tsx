@@ -20,11 +20,7 @@ const ShowTile = ({ showResult }: { showResult: Show }) => {
     >
       {showResult?.image ? (
         <img
-          src={`${
-            showResult?.image?.medium
-              ? showResult?.image?.medium
-              : showResult?.image?.original
-          }`}
+          srcSet={`${showResult?.image?.medium} 700w, ${showResult?.image?.original} 1200w`}
           alt={showResult?.name}
           className="w-48 h-full object-cover"
         />
