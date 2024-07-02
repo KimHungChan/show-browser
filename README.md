@@ -21,6 +21,9 @@ This will install the npm packages
 npm run dev
 ```
 
+**IMPORTANT**
+I'm not sure why but after compiling you may need to refresh the page in order for the search to work.
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ### Usage
