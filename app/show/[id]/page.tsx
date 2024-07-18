@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { Show } from '@/types/types';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useBoundStore } from '@/store/store';
 
 const ShowPage = () => {
   const selectedShow = useShowStore((state) => state.selectedShow);
@@ -24,19 +25,12 @@ const ShowPage = () => {
 
   useEffect(() => {
     if (!selectedShow) {
-      if (
-        localStorage.getItem('selectedShow') &&
-        localStorage.getItem('selectedShow') !== 'null'
-      ) {
-        setSelectedShow(
-          JSON.parse(localStorage.getItem('selectedShow') as string) as Show
-        );
-      } else {
-        getShowById(Number(id));
-      }
+      getShowById(Number(id));
     }
     getSelectedShowExtraData(Number(id));
-  }, [selectedShow, id, getShowById, setSelectedShow]);
+  }, [selectedShow, id, getShowById, getSelectedShowExtraData]);
+
+  console.log('selectedShow', selectedShow);
 
   return (
     <div className="text-white flex flex-col items-center sm:items-baseline px-4 sm:px-16">

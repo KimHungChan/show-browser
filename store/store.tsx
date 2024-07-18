@@ -15,6 +15,7 @@ import {
   getShowCast,
   getShowImages,
 } from '@/api/api';
+import { persist } from 'zustand/middleware';
 
 type ShowState = {
   selectedShow: Show | null;
@@ -33,54 +34,64 @@ type ShowExtraData = {
   images: ShowImage[];
 };
 
-const useShowStore = create<ShowState>()((set) => ({
-  selectedShow: null,
-  setSelectedShow: (show: Show) => set({ selectedShow: show }),
-  selectedShowExtraData: {
-    episodes: [],
-    seasons: [],
-    cast: [],
-    images: [],
-  } as ShowExtraData,
-  shows: [],
-  searchTvShows: async (searchTerm: string) => {
-    try {
-      const response = await searchTvShows(searchTerm);
-      set({ shows: response });
-    } catch (error) {
-      console.error(error);
+const useShowStore = create<ShowState>()(
+  persist(
+    (set) => ({
+      selectedShow: null,
+      setSelectedShow: (show: Show) => set({ selectedShow: show }),
+      selectedShowExtraData: {
+        episodes: [],
+        seasons: [],
+        cast: [],
+        images: [],
+      } as ShowExtraData,
+      shows: [],
+      searchTvShows: async (searchTerm: string) => {
+        try {
+          const response = await searchTvShows(searchTerm);
+          set({ shows: response });
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      getShowById: async (id: number) => {
+        try {
+          const response = await getShowById(id);
+          set({ selectedShow: response });
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      getSelectedShowExtraData: async (id: number) => {
+        try {
+          const [episodes, seasons, cast, images] = await Promise.all([
+            getShowEpisodes(id),
+            getShowSeasons(id),
+            getShowCast(id),
+            getShowImages(id),
+          ]);
+          set((state) => ({
+            selectedShowExtraData: {
+              ...state.selectedShowExtraData,
+              episodes,
+              seasons,
+              cast,
+              images,
+            },
+          }));
+        } catch (error) {
+          console.error(error);
+        }
+      },
+    }),
+    {
+      name: 'show-store',
+      // partialize: (state) => ({ selectedShow: state.selectedShow }),
+      onRehydrateStorage: (state) => {
+        console.log('rehydrated', state);
+      },
     }
-  },
-  getShowById: async (id: number) => {
-    try {
-      const response = await getShowById(id);
-      set({ selectedShow: response });
-      localStorage.setItem('selectedShow', JSON.stringify(response));
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  getSelectedShowExtraData: async (id: number) => {
-    try {
-      const [episodes, seasons, cast, images] = await Promise.all([
-        getShowEpisodes(id),
-        getShowSeasons(id),
-        getShowCast(id),
-        getShowImages(id),
-      ]);
-      set((state) => ({
-        selectedShowExtraData: {
-          ...state.selectedShowExtraData,
-          episodes,
-          seasons,
-          cast,
-          images,
-        },
-      }));
-    } catch (error) {
-      console.error(error);
-    }
-  },
-}));
+  )
+);
 
 export default useShowStore;

@@ -15,7 +15,6 @@ const ShowTile = ({ showResult }: { showResult: Show }) => {
       onClick={() => {
         setSelectedShow(showResult);
         router.push(`/show/${showResult.id}`);
-        localStorage.setItem('selectedShow', JSON.stringify(showResult));
       }}
       data-testid="show-tile"
     >
